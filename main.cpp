@@ -264,7 +264,7 @@ webLinks::webLinks()
 {
     URL = *new myString();
     numLinks = 0;
-    webLinks** = new webLinks**[0];
+    webLinks** = *new webLinks[0];
 
 }
 
@@ -292,7 +292,11 @@ webLinks* webLinks::getHyperLink(int i)
 
 webLinks::~webLinks()
 {
-    //TODO
+    if (URL.getWord() != NULL) delete [] URL;
+    numLinks = 0;
+    if (hyperLinks != NULL) delete [] hyperLinks;
+    URL = NULL;
+    hyperLinks = NULL;
 }
 
 void webLinks::addSite(myString& t)
