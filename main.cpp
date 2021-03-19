@@ -256,27 +256,33 @@ public:
 
 ostream& operator << (ostream& s, webLinks& A)
 {
-    //TODO
+    s << A.URL.getWord();
+    return s;
 }
 
 webLinks::webLinks()
 {
-    //TODO
+    URL = *new myString();
+    numLinks = 0;
+    webLinks** = new webLinks**[0];
+
 }
 
 webLinks::webLinks(myString& x, int n)
 {
-    //TODO
+    URL = x;
+    numLinks = n;
+    webLinks** = new webLinks[numLinks];
 }
 
 myString& webLinks::getURL()
 {
-    //TODO
+    return URL;
 }
 
 int webLinks::getNumLinks()
 {
-    //TODO
+    return numLinks;
 }
 
 webLinks* webLinks::getHyperLink(int i)
