@@ -264,7 +264,7 @@ webLinks::webLinks()
 {
     URL = *new myString();
     numLinks = 0;
-    webLinks** = *new webLinks[0];
+    hyperLinks = new webLinks *[0];
 
 }
 
@@ -272,7 +272,7 @@ webLinks::webLinks(myString& x, int n)
 {
     URL = x;
     numLinks = n;
-    webLinks** = new webLinks[numLinks];
+    hyperLinks = new webLinks *[n];
 }
 
 myString& webLinks::getURL()
@@ -301,7 +301,7 @@ webLinks::~webLinks()
 
 void webLinks::addSite(myString& t)
 {
-    //TODO
+    URL = t;
 }
 
 void webLinks::setNeighbors(int nei)
