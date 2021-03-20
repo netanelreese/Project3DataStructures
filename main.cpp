@@ -242,6 +242,7 @@ protected:
     myString URL;
     int numLinks;
     webLinks** hyperLinks;
+    int counter = 0;
 public:
     webLinks ();
     webLinks (myString& x, int n);
@@ -287,7 +288,7 @@ int webLinks::getNumLinks()
 
 webLinks* webLinks::getHyperLink(int i)
 {
-    //TODO
+    return hyperLinks[i];
 }
 
 webLinks::~webLinks()
@@ -307,11 +308,14 @@ void webLinks::addSite(myString& t)
 void webLinks::setNeighbors(int nei)
 {
     //TODO
+
 }
 
 void webLinks::addNeighbor(webLinks& link)
 {
     //TODO
+    hyperLinks[counter] = new webLinks(link);
+    counter++;
 }
 
 int main () {
