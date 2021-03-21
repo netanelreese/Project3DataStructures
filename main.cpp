@@ -366,7 +366,10 @@ int main () {
     cout << "~~~~~Webpages contained as hyperLinks:" << endl;
     // display all the incoming nodes here
     for (int i = 0; i < numSites; ++i) {
-        cout << myWeb[i] << endl;
+        cout << myWeb[i] << ":" << endl;
+        for (int j = 0; j < myWeb[i].getNumLinks(); ++j) {
+            cout << "** " << myWeb[i].getHyperLink(j) << endl;
+        }
     }
 
     delete [] myWeb;
