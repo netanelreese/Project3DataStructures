@@ -253,6 +253,7 @@ public:
     void addSite(myString& t);
     void addNeighbor(webLinks& link);
     void setNeighbors(int nei);
+    void setURL(myString& input);
 };
 
 ostream& operator << (ostream& s, webLinks& A)
@@ -290,10 +291,13 @@ webLinks* webLinks::getHyperLink(int i)
 {
     return hyperLinks[i];
 }
+void webLinks::setURL(myString& input) {
+    URL = input;
+}
 
 webLinks::~webLinks()
 {
-    if (URL.getWord() != NULL) delete [] URL;
+    //if (URL.getWord() != NULL) delete [] URL;
     numLinks = 0;
     if (hyperLinks != NULL) delete [] hyperLinks;
     URL = NULL;
@@ -308,12 +312,11 @@ void webLinks::addSite(myString& t)
 void webLinks::setNeighbors(int nei)
 {
     //TODO
-
+    numLinks = nei;
 }
 
 void webLinks::addNeighbor(webLinks& link)
 {
-    //TODO
     hyperLinks[counter] = new webLinks(link);
     counter++;
 }
@@ -331,10 +334,17 @@ int main () {
     cin >> numSites;
     cout << "Number of websites: " << numSites << endl;
 
+    token = getNextToken();
+
     webLinks* myWeb = new webLinks [numSites];
     for (int i=0; i < numSites; i++)
     {
         // read all URL and store them in the myWeb array of webLink objects
+        tokenString = new myString(token);
+        webLinks newLink = *new webLinks();
+        newLink.setURL(*tokenString);
+        myWeb[i] = newLink;
+        token = getNextToken();
     }
 
     // store the neighbours/hyperlinks
@@ -353,8 +363,12 @@ int main () {
 
     cout << "~~~~~Webpages contained as hyperLinks:" << endl;
     // display all the incoming nodes here
+    for (int i = 0; i < numSites; ++i) {
+        cout << myWeb[i] << endl;
+    }
 
     delete [] myWeb;
+    delete [] tokenString;
 
     return 0;
 }
