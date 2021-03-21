@@ -314,6 +314,7 @@ void webLinks::setNeighbors(int nei)
 {
     //TODO
     numLinks = nei;
+    hyperLinks = new webLinks *[numLinks];
 }
 
 void webLinks::addNeighbor(webLinks& link)
