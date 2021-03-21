@@ -211,8 +211,8 @@ myString::~myString() {
 
 // get one token from redirected input and return that string (alphanumeric)
 char* getNextToken () {
-    char* str = new char[20]; //assumes a max token size of 20
-    emptyString (str, 20);
+    char* str = new char[30]; //assumes a max token size of 20
+    emptyString (str, 30);
 
     char c;
     int i = 0;
@@ -244,6 +244,7 @@ protected:
     int numLinks;
     webLinks** hyperLinks;
     int counter = 0;
+    int frequency;
 public:
     webLinks ();
     webLinks (myString& x, int n);
@@ -253,8 +254,9 @@ public:
     myString& getURL();
     void addSite(myString& t);
     void addNeighbor(webLinks& link);
-    void setNeighbors(int nei);
-    void setURL(myString& input);
+    void setNumNeighbors(int nei);
+    void incrementFrequency();
+    int getFreq();
 };
 
 ostream& operator << (ostream& s, webLinks& A)
@@ -268,7 +270,7 @@ webLinks::webLinks()
     URL = *new myString();
     numLinks = 0;
     hyperLinks = new webLinks *[0];
-
+    frequency = 0;
 }
 
 webLinks::webLinks(myString& x, int n)
@@ -276,6 +278,7 @@ webLinks::webLinks(myString& x, int n)
     URL = x;
     numLinks = n;
     hyperLinks = new webLinks *[n];
+    frequency = 0;
 }
 
 myString& webLinks::getURL()
@@ -290,27 +293,30 @@ int webLinks::getNumLinks()
 
 webLinks* webLinks::getHyperLink(int i)
 {
-    return hyperLinks[i];
-}
-void webLinks::setURL(myString& input) {
-    URL = input;
+    return hyperLinks [i];
 }
 
 webLinks::~webLinks()
 {
     //if (URL.getWord() != NULL) delete [] URL;
     numLinks = 0;
-    //if (hyperLinks != NULL) delete [] hyperLinks;
+    if (hyperLinks != NULL) delete [] hyperLinks;
     //URL = NULL;
-    //hyperLinks = NULL;
+    hyperLinks = NULL;
 }
 
 void webLinks::addSite(myString& t)
 {
     URL = t;
 }
+int webLinks::getFreq() {
+    return frequency;
+}
+void webLinks::incrementFrequency() {
+    frequency++;
+}
 
-void webLinks::setNeighbors(int nei)
+void webLinks::setNumNeighbors(int nei)
 {
     //TODO
     numLinks = nei;
@@ -336,24 +342,28 @@ int main () {
     cin >> numSites;
     cout << "Number of websites: " << numSites << endl;
 
+    webLinks* myWeb = new webLinks [numSites];
+
     token = getNextToken();
 
-    webLinks* myWeb = new webLinks [numSites];
-    for (int i=0; i < numSites; i++)
+    for (int i=0; i < numSites -1; i++)
     {
         // read all URL and store them in the myWeb array of webLink objects
         tokenString = new myString(token);
-        webLinks newLink = *new webLinks();
-        newLink.setURL(*tokenString);
-        myWeb[i] = newLink;
+        //webLinks newLink = *new webLinks();
+        //newLink.addSite(*tokenString);
+        myWeb[i].addSite(*tokenString);
         token = getNextToken();
     }
+    tokenString = new myString(token);
+    myWeb[numSites - 1].addSite(*tokenString);
+
 
     // store the neighbours/hyperlinks
     for (int i = 0; i < numSites; i++)
     {
         cin >> siteNo >> numNeighbors;
-        myWeb[i].setNeighbors(numNeighbors);
+        myWeb[i].setNumNeighbors(numNeighbors);
         for (int j=0; j < numNeighbors; j++)
         {
             cin >> neighbor;
@@ -361,15 +371,40 @@ int main () {
         }
     }
 
+    //display all weblink objects normally
+    cout << "~~~~~WebLinks:" << endl;
+    for (int i = 0; i < numSites; ++i) {
+        cout << myWeb[i].getURL() << ":" << endl;
+        for(int j = 0; j < myWeb[i].getNumLinks(); ++j) {
+            cout << "** " << myWeb[i].getHyperLink(j)->getURL() << endl;
+        }
+        cout << endl;
+    }
+
+
     // display all webLink objects using the overloaded << operator
+
+
 
     cout << "~~~~~Webpages contained as hyperLinks:" << endl;
     // display all the incoming nodes here
     for (int i = 0; i < numSites; ++i) {
-        cout << myWeb[i] << ":" << endl;
-        for (int j = 0; j < myWeb[i].getNumLinks(); ++j) {
-            cout << "** " << myWeb[i].getHyperLink(j) << endl;
+        for(int k = 0; k < numSites; ++k) {
+            for(int l = 0; l < myWeb[k].getNumLinks(); ++l) {
+                if (myWeb[i].getURL() == myWeb[k].getHyperLink(l)->getURL()) {
+                    myWeb[i].incrementFrequency();
+                }
+            }
         }
+        cout << myWeb[i] << ": " << myWeb[i].getFreq() << endl;
+        for(int k = 0; k < numSites; ++k) {
+            for(int l = 0; l < myWeb[k].getNumLinks(); ++l) {
+                if (myWeb[i].getURL() == myWeb[k].getHyperLink(l)->getURL()) {
+                    cout << "** " << myWeb[k].getURL() << endl;
+                }
+            }
+        }
+        cout << endl;
     }
 
     delete [] myWeb;
