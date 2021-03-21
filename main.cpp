@@ -300,9 +300,9 @@ webLinks::~webLinks()
 {
     //if (URL.getWord() != NULL) delete [] URL;
     numLinks = 0;
-    if (hyperLinks != NULL) delete [] hyperLinks;
-    URL = NULL;
-    hyperLinks = NULL;
+    //if (hyperLinks != NULL) delete [] hyperLinks;
+    //URL = NULL;
+    //hyperLinks = NULL;
 }
 
 void webLinks::addSite(myString& t)
@@ -370,7 +370,7 @@ int main () {
     }
 
     delete [] myWeb;
-    delete [] tokenString;
+    //delete [] tokenString;
 
     return 0;
 }
