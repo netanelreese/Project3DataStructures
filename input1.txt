@@ -1,7 +1,7 @@
 100
-en.wikipedia.org
+en.wikipedia1.org
 youtube.com
-amazon.com
+amazon9.com
 facebook.com
 twitter.com
 fandom.com

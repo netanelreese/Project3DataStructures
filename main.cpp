@@ -257,13 +257,20 @@ public:
     void setNumNeighbors(int nei);
     void incrementFrequency();
     int getFreq();
+    int getNumNeighbors();
 };
-
+int webLinks::getNumNeighbors() {
+    return numLinks;
+}
 ostream& operator << (ostream& s, webLinks& A)
 {
-    s << A.URL.getWord(); //displays the URL with the operator so we dont have to do .getURL() to display the object
+    s << A.URL.getWord() << ":" << endl; //displays the URL with the operator so we dont have to do .getURL() to display the object
+    for (int i = 0; i < A.getNumNeighbors(); ++i) {
+        s << "** " << A.getHyperLink(i)->getURL().getWord() << endl;
+    }
     return s;
 }
+
 
 webLinks::webLinks() //default constructor
 {
@@ -328,6 +335,7 @@ void webLinks::addNeighbor(webLinks& link)
     counter++; //incrementing the counter so no neighbor is overwritten
 }
 
+
 int main () {
 
     int numSites;
@@ -369,13 +377,10 @@ int main () {
 
     //display all weblink objects normally
     cout << "~~~~~WebLinks:" << endl;
-    for (int i = 0; i < numSites; ++i) {
-        cout << myWeb[i].getURL() << ":" << endl; //displaying the URL of each element
-        for(int j = 0; j < myWeb[i].getNumLinks(); ++j) {
-            cout << "** " << myWeb[i].getHyperLink(j)->getURL() << endl; //and then displaying each neighbor
-        }
-        cout << endl; //adding a newline after every URL
+    for(int i = 0; i < numSites; ++i) {
+        cout << myWeb[i] << endl;
     }
+
 
 
     // display all webLink objects using the overloaded << operator
@@ -392,11 +397,11 @@ int main () {
                 }
             }
         }
-        cout << myWeb[i] << ": " << myWeb[i].getFreq() << endl; //this displays the link with the frequency in it using the << operator
+        cout << myWeb[i].getURL() << ": " << myWeb[i].getFreq() << endl; //this displays the link with the frequency in it using the << operator
         for(int k = 0; k < numSites; ++k) { //this for loop displays each link that has myWeb[i] hyperlinked into it
             for(int l = 0; l < myWeb[k].getNumLinks(); ++l) {
                 if (myWeb[i].getURL() == myWeb[k].getHyperLink(l)->getURL()) {
-                    cout << "** " << myWeb[k] << endl; //displaying each link using the overloaded << operator
+                    cout << "** " << myWeb[k].getURL() << endl; //displaying each link using the overloaded << operator
                 }
             }
         }
