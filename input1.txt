@@ -1,4 +1,4 @@
-100
+102
 en.wikipedia1.org
 youtube.com
 amazon9.com
@@ -99,6 +99,8 @@ ny.gov
 twitch.tv
 adobe.com
 cbssports.com
+penis.com
+sridhar.net
 0 4 60 22 85 63 
 1 2 49 86 
 2 1 83 
@@ -198,4 +200,7 @@ cbssports.com
 96 7 16 43 60 31 39 31 39 
 97 6 89 99 53 18 84 56 
 98 3 46 49 36 
-99 1 1   
+99 1 1 
+100 11 2 3 4 5 6 7 8 9 0 92 100
+101 2 100 101
+  

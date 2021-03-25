@@ -223,7 +223,8 @@ char* getNextToken () {
                 if ( ((c >= 'a') && (c <= 'z')) ||
                      ((c >= 'A') && (c <= 'Z')) ||
                      ((c >= '0') && (c <= '9')) ||
-                     (c == '-') || (c == '.' ))
+                     (c == '-') || (c == '.' )  ||
+                        (c =='_'))
                     str[i++] = c;
             }
             else if ((c == '\n') && (i > 0))
@@ -257,18 +258,11 @@ public:
     void setNumNeighbors(int nei);
     void incrementFrequency();
     int getFreq();
-    int getNumNeighbors();
 };
-int webLinks::getNumNeighbors() {
-    return numLinks;
-}
-ostream& operator << (ostream& s, webLinks& A)
-{
+ostream& operator << (ostream& s, webLinks& A){
     s << A.URL.getWord() << ":" << endl; //displays the URL with the operator so we dont have to do .getURL() to display the object
-    for (int i = 0; i < A.getNumNeighbors(); ++i) {
-        s << "** " << A.getHyperLink(i)->getURL().getWord() << endl;
-    }
-    return s;
+    for (int i = 0; i < A.getNumLinks(); ++i) s << "** " << A.getHyperLink(i)->getURL().getWord() << endl; //displaying hyperlinks
+    return s; //returning the output stream object
 }
 
 
